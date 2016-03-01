@@ -29,7 +29,7 @@ Let's just give a simple example where `load-js` is loaded via a script tag in y
     <script type="text/javascript" src="node_modules/load-js/index.js"></script>
 
     <script type="text/javascript">
-      <!-- load your stuff -->
+      /* load your stuff */
       loadJS("https://code.jquery.com/jquery-2.2.1.js")
         .then(function() {
           console.log("jQuery is loaded");
