@@ -1,0 +1,19 @@
+{
+  "name": "load-js",
+  "version": "1.0.0",
+  "description": "Promise based script loader for the browser using async script tags",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MiguelCastillo/load-js.git"
+  },
+  "author": "Miguel Castillo <manchagnu@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MiguelCastillo/load-js/issues"
+  },
+  "homepage": "https://github.com/MiguelCastillo/load-js"
+}
