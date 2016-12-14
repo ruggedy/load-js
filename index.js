@@ -82,6 +82,8 @@
   }
 
   return function load(items) {
-    return Promise.all([].concat(items).map(exec));
+    return items instanceof Array ?
+      Promise.all(items.map(exec)) :
+      exec(items);
   }
 });
