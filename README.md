@@ -51,7 +51,7 @@ Let's just give a simple example where `load-js` is loaded via a script tag in y
 </html>
 ```
 
-Another example configuring the script loading to be asynchonous
+Another example configuring the script execution to be asynchonous
 
 ``` javascript
 loadJS([{
