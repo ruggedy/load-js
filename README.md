@@ -20,10 +20,11 @@ loadJS is a method that loads scripts concurrently using script tags. loadJS tak
 - `type`: defaults to `text/javascript`
 - `async`: defaults to `false`
 - `charset`: defaults to `utf-8`
-- `url`: required if no `text` is provided.
-- `text`: required if no `url` is provided.
+- `id`: no default value
+- `url`: required if no `text` is provided
+- `text`: required if no `url` is provided
 
-> text and url are mutually exclusive. If you call loadJS with a string as a parameter that string will be treated as a url. If you specify both, then url will be used.
+> text and url are mutually exclusive and you must specify one. If you call loadJS with a string as a parameter that string will be treated as a url. If you specify both, then url will be used.
 
 These options are described in detail [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script).
 
