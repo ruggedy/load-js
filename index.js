@@ -10,26 +10,31 @@
     global.loadJS = factory();
   }
 })(this, function() {
-  function loadScript(url) {
-    var head   = document.getElementsByTagName("head")[0] || document.documentElement;
+  function loadScript(options) {
+    var head = document.getElementsByTagName("head")[0] || document.documentElement;
     var script = document.createElement("script");
 
-    script.setAttribute("async",   "true");
-    script.setAttribute("charset", "utf-8");
-    script.setAttribute("type",    "text/javascript");
-    script.setAttribute("src",     url);
+    if (typeof options === "string") {
+      options = {
+        url: options
+      };
+    }
 
-    //
-    // Code from:
-    // http://stackoverflow.com/questions/4845762/onload-handler-for-script-tag-in-internet-explorer
-    // http://stevesouders.com/efws/script-onload.php
-    //
+    script.charset = options.charset || "utf-8";
+    script.type = options.type || "text/javascript";
+    script.async = !!options.async;
+    script.src = options.url;
 
     return new Promise(function(resolve) {
       // Handle Script loading
       var done = false;
 
       // Attach handlers for all browsers
+      //
+      // References:
+      // http://stackoverflow.com/questions/4845762/onload-handler-for-script-tag-in-internet-explorer
+      // http://stevesouders.com/efws/script-onload.php
+      //
       script.onload = script.onreadystatechange = function() {
         if (!done && (!this.readyState ||
               this.readyState === "loaded" ||
@@ -53,5 +58,9 @@
     });
   }
 
-  return loadScript;
+  return function load(items) {
+    return Promise.all([].concat(items).map(function(item) {
+      return loadScript(item);
+    }));
+  }
 });

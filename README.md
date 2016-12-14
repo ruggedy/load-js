@@ -1,17 +1,30 @@
 # load-js
-Promise based script loader for the browser using async script tags.
+Promise based script loader for the browser using script tags.
 
 This is a UMD module, so feel free to include it in your nodejs bundling pipeline or directly in the browser via script tags.
 
 > Promise implementation needs to be polyfilled if environment does not already provide it.
 
-## Install
+# usage
+
+## install
 
 ```
 $ npm install load-js
 ```
 
-## Usage
+## api
+
+loadJS is a method that loads scripts concurrently using script tags. loadJS takes in a single or an array of items where the items can be just a url string, or a config object with options for configuring:
+
+- `type`: defaults to `text/javascript`
+- `async`: defaults to `false`
+- `charset`: defaults to `utf-8`
+- `url`: required and there is no default
+
+These options are described in detail [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script).
+
+## examples
 
 Let's just give a simple example where `load-js` is loaded via a script tag in you HTML
 
@@ -21,18 +34,14 @@ Let's just give a simple example where `load-js` is loaded via a script tag in y
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <!-- polyfill promise if needed -->
-    <script type="text/javascript" src="node_modules/spromise/dist/spromise.min.js"></script>
-    <script>if (typeof(window) !== 'undefined' && !window.hasOwnProperty("Promise")) window.Promise = spromise;</script>
-
     <!-- Include load-js -->
-    <script type="text/javascript" src="node_modules/load-js/index.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/load-js@1.1.0"></script>
 
     <script type="text/javascript">
       /* load your stuff */
-      loadJS("https://code.jquery.com/jquery-2.2.1.js")
+      loadJS(["https://code.jquery.com/jquery-2.2.1.js", "https://unpkg.com/react@15.3.1/dist/react.min.js"])
         .then(function() {
-          console.log("jQuery is loaded");
+          console.log("jQuery and react are loaded");
         });
     </script>
   </head>
@@ -40,4 +49,19 @@ Let's just give a simple example where `load-js` is loaded via a script tag in y
   <body>
   </body>
 </html>
+```
+
+Another example configuring the script loading to be asynchonous
+
+``` javascript
+loadJS([{
+  async: true,
+  url: "https://code.jquery.com/jquery-2.2.1.js"
+}, {
+  async: true,
+  url: "https://unpkg.com/react@15.3.1/dist/react.min.js"
+}])
+.then(() => {
+  console.log("all done!");
+});
 ```
