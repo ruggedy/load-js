@@ -50,7 +50,7 @@
             head.removeChild(script);
           }
 
-          resolve();
+          resolve(script);
         }
       };
 
