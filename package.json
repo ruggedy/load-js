@@ -1,7 +1,7 @@
 {
   "name": "load-js",
   "version": "1.1.0",
-  "description": "Promise based script loader for the browser using async script tags",
+  "description": "Promise based script loader for the browser using script tags",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
