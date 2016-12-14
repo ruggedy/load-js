@@ -10,21 +10,40 @@
     global.loadJS = factory();
   }
 })(this, function() {
-  function loadScript(options) {
-    var head = document.getElementsByTagName("head")[0] || document.documentElement;
-    var script = document.createElement("script");
-
+  function exec(options) {
     if (typeof options === "string") {
       options = {
         url: options
       };
     }
 
+    if (!options.url && !options.text) {
+      throw new Error("must provide a url or text to load");
+    }
+
+    var head = document.getElementsByTagName("head")[0] || document.documentElement;
+    var script = document.createElement("script");
+
     script.charset = options.charset || "utf-8";
     script.type = options.type || "text/javascript";
     script.async = !!options.async;
-    script.src = options.url;
 
+    if (options.url) {
+      script.src = options.url;
+      return loadScript(head, script);
+    }
+    else {
+      script.text = options.text;
+      return runScript(head, script);
+    }
+  }
+
+  function runScript(head, script) {
+    head.appendChild(script);
+    return Promise.resolve(script);
+  }
+
+  function loadScript(head, script) {
     return new Promise(function(resolve) {
       // Handle Script loading
       var done = false;
@@ -59,8 +78,6 @@
   }
 
   return function load(items) {
-    return Promise.all([].concat(items).map(function(item) {
-      return loadScript(item);
-    }));
+    return Promise.all([].concat(items).map(exec));
   }
 });
