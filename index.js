@@ -28,6 +28,10 @@
     script.type = options.type || "text/javascript";
     script.async = !!options.async;
 
+    if (options.hasOwnProperty("id")) {
+      script.id = options.id;
+    }
+
     if (options.url) {
       script.src = options.url;
       return loadScript(head, script);
