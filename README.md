@@ -39,7 +39,7 @@ Let's just give a simple example where `load-js` is loaded via a script tag in y
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <!-- Include load-js -->
-    <script type="text/javascript" src="https://unpkg.com/load-js@1.1.0"></script>
+    <script type="text/javascript" src="https://unpkg.com/load-js@1.1.2"></script>
 
     <script type="text/javascript">
       /* load your stuff */
