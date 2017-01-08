@@ -23,6 +23,7 @@ loadJS is a method that loads scripts concurrently using script tags. loadJS tak
 - `id`: no default value
 - `url`: required if no `text` is provided
 - `text`: required if no `url` is provided
+- `cache`: flag to determine if item with ID or URL is to be cached. defaults to `true`
 
 > text and url are mutually exclusive and you must specify one. If you call loadJS with a string as a parameter that string will be treated as a url. If you specify both, then url will be used.
 
@@ -39,7 +40,7 @@ Let's just give a simple example where `load-js` is loaded via a script tag in y
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <!-- Include load-js -->
-    <script type="text/javascript" src="https://unpkg.com/load-js@1.1.2"></script>
+    <script type="text/javascript" src="https://unpkg.com/load-js@1.2.0"></script>
 
     <script type="text/javascript">
       /* load your stuff */
