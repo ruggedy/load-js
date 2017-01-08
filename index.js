@@ -10,6 +10,8 @@
     global.loadJS = factory();
   }
 })(this, function() {
+  var cache = {};
+
   function exec(options) {
     if (typeof options === "string") {
       options = {
@@ -17,29 +19,41 @@
       };
     }
 
+    var id = options.id || options.url;
+    var script = cache[id];
+
+    if (script) {
+      console.log('load-js cache hit', id);
+      return script;
+    }
+
     if (!options.url && !options.text) {
       throw new Error("must provide a url or text to load");
     }
 
-    var head = document.getElementsByTagName("head")[0] || document.documentElement;
-    var script = document.createElement("script");
-
+    script = document.createElement("script");
     script.charset = options.charset || "utf-8";
     script.type = options.type || "text/javascript";
     script.async = !!options.async;
+    script.id = id;
 
-    if (options.hasOwnProperty("id")) {
-      script.id = options.id;
-    }
+    var head = document.getElementsByTagName("head")[0] || document.documentElement;
+    var pending;
 
     if (options.url) {
       script.src = options.url;
-      return loadScript(head, script);
+      pending = loadScript(head, script);
     }
     else {
       script.text = options.text;
-      return runScript(head, script);
+      pending = runScript(head, script);
     }
+
+    if (options.cache !== false && id) {
+      cache[id] = pending;
+    }
+
+    return pending;
   }
 
   function runScript(head, script) {
@@ -69,10 +83,6 @@
 
           // Handle memory leak in IE
           script.onload = script.onreadystatechange = null;
-          if (head && script.parentNode) {
-            head.removeChild(script);
-          }
-
           resolve(script);
         }
       };
