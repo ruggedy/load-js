@@ -1,4 +1,6 @@
 # load-js
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/MiguelCastillo/load-js.svg)](https://greenkeeper.io/)
 Promise based script loader for the browser using script tags.
 
 This is a UMD module, so feel free to include it in your nodejs bundling pipeline or directly in the browser via script tags.
