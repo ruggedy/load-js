@@ -62,7 +62,7 @@
   }
 
   function loadScript(head, script) {
-    return new Promise(function(resolve) {
+    return new Promise(function(resolve, reject) {
       // Handle Script loading
       var done = false;
 
@@ -86,6 +86,7 @@
           resolve(script);
         }
       };
+      script.onerror = reject;
 
       head.appendChild(script);
     });
