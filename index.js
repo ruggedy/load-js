@@ -66,26 +66,23 @@
       // Handle Script loading
       var done = false;
 
-      // Attach handlers for all browsers
+      // Attach handlers for all browsers.
       //
       // References:
       // http://stackoverflow.com/questions/4845762/onload-handler-for-script-tag-in-internet-explorer
       // http://stevesouders.com/efws/script-onload.php
+      // https://www.html5rocks.com/en/tutorials/speed/script-loading/
       //
       script.onload = script.onreadystatechange = function() {
-        if (!done && (!this.readyState ||
-              this.readyState === "loaded" ||
-              this.readyState === "complete")) {
+        if (!done && (!script.readyState || script.readyState === "loaded" || script.readyState === "complete")) {
           done = true;
-
-          // Get the module id that just finished and load it up!
-          // var loadedSrc = script.getAttribute("src");
 
           // Handle memory leak in IE
           script.onload = script.onreadystatechange = null;
           resolve(script);
         }
       };
+
       script.onerror = reject;
 
       head.appendChild(script);
