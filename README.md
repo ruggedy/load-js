@@ -30,6 +30,8 @@ loadJS is a method that loads scripts concurrently using script tags. loadJS tak
 
 > text and url are mutually exclusive and you must specify one. If you call loadJS with a string as a parameter that string will be treated as a url. If you specify both, then url will be used.
 
+The `async` flag will enable the browsers ability load and execute scripts as soon as possible. This means that scripts are likely going to excute out of order. Because of the nondeterministic script execution nature of `async`, it is defaulted to false.
+
 These options are described in detail [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script).
 
 ## examples
