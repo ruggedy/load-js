@@ -29,7 +29,7 @@
     }
     else {
       var el = getScriptById(options.id) || getScriptByUrl(options.url);
-      if (el && id && options.cache !== false) {
+      if (el && id && options.allowExternal !== false) {
         cache[id] = Promise.resolve(el);
         return cache[id];
       }
