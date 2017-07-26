@@ -11,6 +11,7 @@
   }
 })(this, function() {
   var cache = {};
+  var head = document.getElementsByTagName("head")[0] || document.documentElement;
 
   function exec(options) {
     if (typeof options === "string") {
@@ -19,38 +20,35 @@
       };
     }
 
-    var id = options.id || options.url;
-    var script = cache[id];
+    var cacheId = options.id || options.url;
+    var cacheEntry = cache[cacheId];
 
-    if (script) {
-      console.log('load-js cache hit', id);
-      return script;
+    if (cacheEntry) {
+      console.log("load-js: cache hit", cacheId);
+      return cacheEntry;
+    }
+    else if (options.allowExternal !== false) {
+      var el = getScriptById(options.id) || getScriptByUrl(options.url);
+
+      if (el) {
+        var promise = Promise.resolve(el);
+
+        if (cacheId) {
+          cache[cacheId] = promise;
+        }
+
+        return promise;
+      }
     }
 
     if (!options.url && !options.text) {
-      throw new Error("must provide a url or text to load");
+      throw new Error("load-js: must provide a url or text to load");
     }
 
-    script = document.createElement("script");
-    script.charset = options.charset || "utf-8";
-    script.type = options.type || "text/javascript";
-    script.async = !!options.async;
-    script.id = id;
+    var pending = (options.url ? loadScript : runScript)(head, createScript(options));
 
-    var head = document.getElementsByTagName("head")[0] || document.documentElement;
-    var pending;
-
-    if (options.url) {
-      script.src = options.url;
-      pending = loadScript(head, script);
-    }
-    else {
-      script.text = options.text;
-      pending = runScript(head, script);
-    }
-
-    if (options.cache !== false && id) {
-      cache[id] = pending;
+    if (cacheId && options.cache !== false) {
+      cache[cacheId] = pending;
     }
 
     return pending;
@@ -87,6 +85,43 @@
 
       head.appendChild(script);
     });
+  }
+
+  function createScript(options) {
+    var script = document.createElement("script");
+    script.charset = options.charset || "utf-8";
+    script.type = options.type || "text/javascript";
+    script.async = !!options.async;
+    script.id = options.id || options.url;
+    script.loadJS = "watermark";
+
+    if (options.url) {
+      script.src = options.url;
+    }
+
+    if (options.text) {
+      script.text = options.text;
+    }
+
+    return script;
+  }
+
+  function getScriptById(id) {
+    var script = id && document.getElementById(id);
+
+    if (script && script.loadJS !== "watermark") {
+      console.warn("load-js: duplicate script with id:", id);
+      return script;
+    }
+  }
+
+  function getScriptByUrl(url) {
+    var script = url && document.querySelector("script[src='" + url + "']");
+
+    if (script && script.loadJS !== "watermark") {
+      console.warn("load-js: duplicate script with url:", url);
+      return script;
+    }
   }
 
   return function load(items) {

@@ -20,19 +20,22 @@ $ npm install load-js
 
 loadJS is a method that loads scripts concurrently using script tags. loadJS takes in a single or an array of items where the items can be just a url string, or a config object with options for configuring:
 
-- `type`: defaults to `text/javascript`
-- `async`: defaults to `false`
-- `charset`: defaults to `utf-8`
-- `id`: no default value
-- `url`: required if no `text` is provided
-- `text`: required if no `url` is provided
-- `cache`: flag to determine if item with ID or URL is to be cached. defaults to `true`
+- `type`: defaults to `text/javascript`.
+- `async`: defaults to `false`.
+- `charset`: defaults to `utf-8`.
+- `id`: no default value.
+- `url`: Location of the script to load. Required if no `text` is provided.
+- `text`: Script text to execute. Required if no `url` is provided.
+- `cache`: flag to determine if item with ID or URL is to be cached. defaults to `true`.
+- `allowExternal`: flag to handle situations when the DOM already has a script element with the same ID or URL as what loadJS is being told to load. By default, loadJS will use script elements that already exist in the DOM. To turn off this behavior, set `allowExternal` to false.
+
+Some of these options are described in detail [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script).
 
 > text and url are mutually exclusive and you must specify one. If you call loadJS with a string as a parameter that string will be treated as a url. If you specify both, then url will be used.
 
 The `async` flag will enable the browsers ability load and execute scripts as soon as possible. This means that scripts are likely going to excute out of order. Because of the nondeterministic script execution nature of `async`, it is defaulted to false.
 
-These options are described in detail [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script).
+The elaborate more on the `allowExternal` flag. As explained in the options, this flag is particularly useful for handling situations when the DOM already has script elements with the same ID or URL as what loadJS is supposed to load. For example, if a script element with a URL `https://awesome.cdn/react.js` already exists in the DOM, and for some reason you ask loadJS to load that same URL, loadJS by default will return what already exists in the DOM instead of loading a new script. In order for loadJS to ignore what's already in the DOM and load its own script you need to set `allowExternal` to false.
 
 ## examples
 
