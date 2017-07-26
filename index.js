@@ -27,11 +27,17 @@
       console.log("load-js: cache hit", cacheId);
       return cacheEntry;
     }
-    else if (cacheId && options.allowExternal !== false) {
+    else if (options.allowExternal !== false) {
       var el = getScriptById(options.id) || getScriptByUrl(options.url);
+
       if (el) {
-        cache[cacheId] = Promise.resolve(el);
-        return cache[cacheId];
+        var promise = Promise.resolve(el);
+
+        if (cacheId) {
+          cache[cacheId] = promise;
+        }
+
+        return promise;
       }
     }
 
