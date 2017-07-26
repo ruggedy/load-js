@@ -20,18 +20,18 @@
       };
     }
 
-    var id = options.id || options.url;
-    var cacheEntry = cache[id];
+    var cacheId = options.id || options.url;
+    var cacheEntry = cache[cacheId];
 
     if (cacheEntry) {
-      console.log("load-js: cache hit", id);
+      console.log("load-js: cache hit", cacheId);
       return cacheEntry;
     }
-    else {
+    else if (cacheId && options.allowExternal !== false) {
       var el = getScriptById(options.id) || getScriptByUrl(options.url);
-      if (el && id && options.allowExternal !== false) {
-        cache[id] = Promise.resolve(el);
-        return cache[id];
+      if (el) {
+        cache[cacheId] = Promise.resolve(el);
+        return cache[cacheId];
       }
     }
 
@@ -41,8 +41,8 @@
 
     var pending = (options.url ? loadScript : runScript)(head, createScript(options));
 
-    if (id && options.cache !== false) {
-      cache[id] = pending;
+    if (cacheId && options.cache !== false) {
+      cache[cacheId] = pending;
     }
 
     return pending;
