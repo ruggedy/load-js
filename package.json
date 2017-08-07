@@ -1,6 +1,6 @@
 {
   "name": "load-js",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "description": "Promise based script loader for the browser using script tags",
   "main": "index.js",
   "scripts": {
