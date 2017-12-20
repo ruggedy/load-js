@@ -4,7 +4,8 @@
   "description": "Promise based script loader for the browser using script tags",
   "main": "index.js",
   "scripts": {
-    "prepublish": "pakit src/load-js.js --out index.js --umd loadJS"
+    "prepublish": "pakit src/load-js.js --out index.js",
+    "build": "pakit src/load-js.js --out index.js"
   },
   "repository": {
     "type": "git",
