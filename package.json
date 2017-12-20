@@ -4,7 +4,7 @@
   "description": "Promise based script loader for the browser using script tags",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublish": "pakit src/load-js.js --out index.js --umd loadJS"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/MiguelCastillo/load-js/issues"
   },
-  "homepage": "https://github.com/MiguelCastillo/load-js"
+  "homepage": "https://github.com/MiguelCastillo/load-js",
+  "devDependencies": {
+    "pakit": "^0.6.1"
+  }
 }

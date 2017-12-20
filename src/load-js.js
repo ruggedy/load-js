@@ -1,15 +1,4 @@
-(function(global, factory) {
-  if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
-    // CommonJS support
-    module.exports = factory();
-  } else if (typeof define === "function" && define.amd) {
-    // Do AMD support
-    define(["loadJS"], factory);
-  } else {
-    // Do browser support
-    global.loadJS = factory();
-  }
-})(this, function() {
+function createLoadJS() {
   var cache = {};
   var head = document.getElementsByTagName("head")[0] || document.documentElement;
 
@@ -129,4 +118,7 @@
       Promise.all(items.map(exec)) :
       exec(items);
   }
-});
+}
+
+module.exports = createLoadJS();
+module.exports.create = createLoadJS;
