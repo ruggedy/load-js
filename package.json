@@ -2,7 +2,7 @@
   "name": "load-js",
   "version": "3.0.0",
   "description": "Promise based script loader for the browser using script tags",
-  "main": "src/load-js.js",
+  "main": "index.js",
   "scripts": {
     "prepublish": "pakit src/load-js.js --out index.js --umd loadJS"
   },
