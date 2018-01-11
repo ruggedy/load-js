@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/MiguelCastillo/load-js",
   "devDependencies": {
-    "pakit": "^0.7.0"
+    "pakit": "^1.0.0"
   }
 }
