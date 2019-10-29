@@ -120,5 +120,6 @@ function createLoadJS() {
   }
 }
 
-module.exports = createLoadJS();
-module.exports.create = createLoadJS;
+export default createLoadJS();
+const create = createLoadJS
+export { create };
